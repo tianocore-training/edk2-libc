@@ -52,7 +52,7 @@ wcsxfrm(
 
   len = wcslen(s2);
   if (len<n)
-    wcscpy(s1, s2);
+    wcscpy(s1, len, s2);
   else {
     /*
      * SUSv3 says:

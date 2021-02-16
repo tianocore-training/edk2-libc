@@ -18,6 +18,7 @@
 
 #include  <stdlib.h>
 #include  <string.h>
+#include <limits.h>
 
 /** Do not define memcpy for IPF+GCC or ARM/AARCH64+GCC builds.
     For IPF, using a GCC compiler, the memcpy function is converted to
@@ -73,7 +74,8 @@ strcpy(char * __restrict s1, const char * __restrict s2)
 
   //while ( *s1++ = *s2++)  /* Empty Body */;
   //return(s1ret);
-  return AsciiStrCpy( s1, s2);
+  AsciiStrCpyS(s1, ASCII_STRING_MAX, s2);
+  return (s1);
 }
 
 /** The strncpy function copies not more than n characters (characters that
@@ -89,7 +91,8 @@ strcpy(char * __restrict s1, const char * __restrict s2)
 **/
 char     *strncpy(char * __restrict s1, const char * __restrict s2, size_t n)
 {
-  return AsciiStrnCpy( s1, s2, n);
+  AsciiStrnCpyS(s1, ASCII_STRING_MAX, s2, n);
+  return(s1);
   //char *dest = s1;
 
   //while(n != 0) {

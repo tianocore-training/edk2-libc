@@ -37,7 +37,7 @@ char *getpass(const char *Prompt)
     return (NULL);
   }
 
-  UnicodeStrToAsciiStr(ReturnString, ReturnStringAscii);
+  UnicodeStrToAsciiStrS(ReturnString, ReturnStringAscii, ((StrLen(ReturnString) + 1) * sizeof(CHAR8)));
 
   FreePool(ReturnString);
 

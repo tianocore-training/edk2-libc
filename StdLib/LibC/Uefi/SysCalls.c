@@ -1320,7 +1320,8 @@ char
     errno = ERANGE;
     return (NULL);
   }
-  return (UnicodeStrToAsciiStr(Cwd, buf));
+  UnicodeStrToAsciiStrS(Cwd, buf, size);
+  return (buf);
 }
 
 /** Change the current working directory.
@@ -1347,18 +1348,20 @@ chdir (const char *path)
   CONST CHAR16 *Cwd;
   EFI_STATUS   Status;
   CHAR16       *UnicodePath;
+  UINTN			UpathSize;
 
   /* Old Shell does not support Set Current Dir. */
   if(gEfiShellProtocol != NULL) {
     Cwd = ShellGetCurrentDir(NULL);
     if (Cwd != NULL) {
       /* We have shell support */
-      UnicodePath = AllocatePool(((AsciiStrLen (path) + 1) * sizeof (CHAR16)));
+      UpathSize = ((AsciiStrLen(path) + 1) * sizeof(CHAR16));
+      UnicodePath = AllocatePool(UpathSize);
       if (UnicodePath == NULL) {
         errno = ENOMEM;
         return -1;
       }
-      AsciiStrToUnicodeStr(path, UnicodePath);
+      AsciiStrToUnicodeStrS(path, UnicodePath, UpathSize);
       Status = gEfiShellProtocol->SetCurDir(NULL, UnicodePath);
       FreePool(UnicodePath);
       if (EFI_ERROR(Status)) {

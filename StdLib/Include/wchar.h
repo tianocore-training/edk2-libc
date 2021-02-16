@@ -82,8 +82,10 @@
 
       #######################  String Copying
       wchar_t  *wcscpy    (wchar_t * __restrict s1,
+	                       size_t maxs1,
                            const wchar_t * __restrict s2);
       wchar_t  *wcsncpy   (wchar_t * __restrict s1,
+	                       size_t maxs1,
                            const wchar_t * __restrict s2,   size_t n);
       wchar_t  *wmemcpy   (wchar_t * __restrict s1,
                            const wchar_t * __restrict s2,   size_t n);
@@ -91,8 +93,10 @@
 
       ###################  String Concatenation
       wchar_t  *wcscat    (wchar_t * __restrict s1,
+	                       size_t maxs1,
                            const wchar_t * __restrict s2);
       wchar_t  *wcsncat   (wchar_t * __restrict s1,
+	                       size_t maxs1,
                            const wchar_t * __restrict s2,   size_t n);
 
       #####################  String Comparison
@@ -1114,7 +1118,7 @@ unsigned long long int  wcstoull( const wchar_t * __restrict Nptr, wchar_t ** __
 
     @return   The wcscpy function returns the value of Dest.
 **/
-wchar_t *wcscpy(wchar_t * __restrict Dest, const wchar_t * __restrict Src);
+wchar_t *wcscpy(wchar_t * __restrict Dest, size_t MaxDest, const wchar_t * __restrict Src);
 
 /** The wcsncpy function copies not more than n wide characters (those that
     follow a null wide character are not copied) from the array pointed to by
@@ -1126,7 +1130,7 @@ wchar_t *wcscpy(wchar_t * __restrict Dest, const wchar_t * __restrict Src);
 
     @return   The wcsncpy function returns the value of Dest.
 **/
-wchar_t *wcsncpy(wchar_t * __restrict Dest, const wchar_t * __restrict Src, size_t n);
+wchar_t *wcsncpy(wchar_t * __restrict Dest, size_t MaxDest, const wchar_t * __restrict Src, size_t n);
 
 /** The wmemcpy function copies n wide characters from the object pointed to by
     Src to the object pointed to by Dest.
@@ -1163,7 +1167,7 @@ wchar_t *wmemmove(wchar_t *Dest, const wchar_t *Src, size_t n);
 
     @return   The wcscat function returns the value of Dest.
 **/
-wchar_t *wcscat(wchar_t * __restrict Dest, const wchar_t * __restrict Src);
+wchar_t *wcscat(wchar_t * __restrict Dest, size_t MaxDest, const wchar_t * __restrict Src);
 
 /** The wcsncat function appends not more than n wide characters (a null wide
     character and those that follow it are not appended) from the array pointed
@@ -1173,7 +1177,7 @@ wchar_t *wcscat(wchar_t * __restrict Dest, const wchar_t * __restrict Src);
 
     @return   The wcsncat function returns the value of Dest.
 **/
-wchar_t *wcsncat(wchar_t * __restrict Dest, const wchar_t * __restrict Src, size_t n);
+wchar_t *wcsncat(wchar_t * __restrict Dest, size_t MaxDest, const wchar_t * __restrict Src, size_t n);
 
 /* #####################  String Comparison   ############################# */
 

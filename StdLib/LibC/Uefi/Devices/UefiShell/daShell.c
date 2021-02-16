@@ -495,8 +495,8 @@ da_ShellOpen(
       EFIerrno = RETURN_OUT_OF_RESOURCES;
       return -1;
     }
-    wcsncpy(WPath, MPath, NAME_MAX);                /* Get the Map Name */
-    wcsncat(WPath, Path, (PATH_MAX - NAME_MAX));    /* Append the path */
+    wcsncpy(WPath, (size_t)(PATH_MAX * sizeof(wchar_t) + 1), MPath, NAME_MAX);                /* Get the Map Name */
+    wcsncat(WPath, (size_t)(PATH_MAX * sizeof(wchar_t) + 1), Path, (PATH_MAX - NAME_MAX));    /* Append the path */
   }
   else {
     WPath = Path;
@@ -661,7 +661,7 @@ da_ShellRename(
         // Strip off all but the file name portion of new
           NewFn = GetFileNameFromPath(NormalizedPath);
         // Copy the new file name into our new file info buffer
-          wcsncpy(NewFileInfo->FileName, NewFn, wcslen(NewFn) + 1);
+          wcsncpy(NewFileInfo->FileName, wcslen(NewFn) + 1, NewFn, wcslen(NewFn) + 1);
           // Update the size of the structure.
           NewFileInfo->Size = sizeof(EFI_FILE_INFO) + StrSize(NewFn);
         // Apply the new file name

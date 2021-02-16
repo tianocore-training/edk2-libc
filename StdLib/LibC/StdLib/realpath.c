@@ -38,17 +38,19 @@ realpath(
   )
 {
   CHAR16 *Temp;
+  UINTN size;
   if (file_name == NULL || resolved_name == NULL) {
     errno = EINVAL;
     return (NULL);
   }
-  Temp = AllocateZeroPool((1+AsciiStrLen(file_name))*sizeof(CHAR16));
+  size = (1 + AsciiStrLen(file_name)) * sizeof(CHAR16);
+  Temp = AllocateZeroPool(size);
   if (Temp == NULL) {
     errno = ENOMEM;
     return (NULL);
   }
-  AsciiStrToUnicodeStr(file_name, Temp);
+  AsciiStrToUnicodeStrS(file_name, Temp, size);
   PathCleanUpDirectories(Temp);
-  UnicodeStrToAsciiStr(Temp, resolved_name);
+  UnicodeStrToAsciiStrS(Temp, resolved_name, size);
   return (resolved_name);
 }

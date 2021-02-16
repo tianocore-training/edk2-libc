@@ -2117,12 +2117,12 @@ posix_listdir(PyObject *self, PyObject *args)
             PyErr_NoMemory();
             return NULL;
         }
-        wcscpy(wnamebuf, PyUnicode_AS_UNICODE(po));
+        wcscpy(wnamebuf, (size_t)((len + 5) * sizeof(wchar_t)), PyUnicode_AS_UNICODE(po));
         if (len > 0) {
             Py_UNICODE wch = wnamebuf[len-1];
             if (wch != L'/' && wch != L'\\' && wch != L':')
                 wnamebuf[len++] = L'\\';
-            wcscpy(wnamebuf + len, L"*.*");
+            wcscpy(wnamebuf + len, (size_t)((len + 5) * sizeof(wchar_t)), L"*.*");
         }
         if ((d = PyList_New(0)) == NULL) {
             free(wnamebuf);
